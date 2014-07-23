@@ -1,0 +1,141 @@
+{%extends "::base.html.twig"%}
+{%block css%}    
+    <link href="{{asset('vendor/css/bootstrapValidator.min.css')}}" rel="stylesheet">
+    <style type="text/css">
+        .has-feedback .form-control-feedback {
+            top: 0;
+            right: -15px;
+        }
+        .has-feedback .input-group .form-control-feedback {
+            top: 0;
+            right: -30px;
+        }
+    </style>
+{%endblock css%}    
+{%block content%}
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a>Registro</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span8">
+                <form id="register_form" action="{{path("makeregistration")}}"
+                      data-bv-message="Este valor no esta permitido"
+                      data-bv-group=".input-control"
+                      data-bv-feedbackicons-valid="icon-checkmark fg-green"
+                      data-bv-feedbackicons-invalid="icon-warning fg-red"
+                      data-bv-feedbackicons-validating="icon-cycle">
+                    <fieldset>
+                        <legend class="subheader-secondary">Registro</legend>
+                        <div class="input-control text size7" data-role="input-control">
+                            <input data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo" 
+                                   type="text" placeholder="Nombre" name="name">
+                        </div>
+                        <div class="input-control text size7" data-role="input-control">
+                            <input data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo" 
+                                   data-bv-emailaddress="true" 
+                                   data-bv-emailaddress-message="Direcci&oacute;n de correo no v&aacute;lida" 
+                                   type="text" placeholder="Email" name="email">
+                        </div>
+                        <div class="input-control text size7" data-role="input-control">
+                            <input type="password" name="password" placeholder="Contrase&ntilde;a"
+                                   data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo"
+
+                                   data-bv-identical="true"
+                                   data-bv-identical-field="confirmPassword"
+                                   data-bv-identical-message="Las contrase&ntilde;as deben coincidir"        
+                                   />
+                        </div>
+                        <div class="input-control text size7" data-role="input-control">
+                            <input type="password" name="confirmPassword" placeholder="Repetir contrase&ntilde;a"
+                                   data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo"
+
+                                   data-bv-identical="true"
+                                   data-bv-identical-field="password"
+                                   data-bv-identical-message="Las contrase&ntilde;as deben coincidir"  
+                                   />
+                        </div>
+                        {#                        <legend class="subheader-secondary">Demuestra que eres una persona <small>haz click en el bicho</small> <i class="icon-bug"></i></legend>#}
+                        <div class="input-control text" style="font-size: 30px">
+                            {#<a class="icon-apple fg-hover-green fg-active-amber"></a>
+                            <a class="icon-bug fg-hover-green fg-active-amber"></a>
+                            <a class="icon-coffee fg-hover-green fg-active-amber"></a>
+                            <a class="icon-home fg-hover-green fg-active-amber"></a>
+                            <a class="icon-user fg-hover-green fg-active-amber"></a>
+                            <a class="icon-umbrella fg-hover-green fg-active-amber"></a>
+                            <a class="icon-monitor fg-hover-green fg-active-amber"></a>
+                            <a class="icon-rocket fg-hover-green fg-active-amber"></a>
+                            <a class="icon-start fg-hover-green fg-active-amber"></a>
+                            <a class="icon-heart fg-hover-green fg-active-amber"></a>
+                            <a class="icon-locked fg-hover-green fg-active-amber"></a>
+                            <a class="icon-dollar fg-hover-green fg-active-amber"></a>
+                            <a class="icon-spades fg-hover-green fg-active-amber"></a>
+                            <a class="icon-clubs fg-hover-green fg-active-amber"></a>
+                            <a class="icon-help fg-green"></a>
+                            #}
+                            <hr>
+                            <div class="row">
+                                <div class="span3">
+                                    <button class="button large bg-orange fg-white size3" type="submit">Registrarme ahora</button>
+                                </div>
+                                <div id="notification" class="span3">
+                                    <img id="loader" style="display: none" src="{{asset('vendor/images/ajax-loader.gif')}}"/>
+                                    <a href="{{path("login")}}" style="display: none" class="button large success fg-white size3" id="success">Entrar ahora <i class="icon-arrow-right"></i></a>
+                                    <div id="error" class="notice error bg-red span8 fg-white" style="display: none; font-size: 14px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span6">
+                {%include "TauenoBundle:Front:ventajas.html.twig"%}
+            </div>
+        </div>
+    {%endblock%}
+
+    {%block javascripts%}
+        {{parent()}}
+        {#    <script src="{{asset('vendor/js/jquery.knob.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/jquery.iframe-transport.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/jquery.fileupload.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/script.js')}}"></script>#}
+        <script src="{{asset('vendor/js/jquery.form.js')}}"></script>
+        <script src="{{asset('vendor/js/bootstrapValidator.min.js')}}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#register_form').bootstrapValidator();
+                $("#register_form").ajaxForm({
+                    dataType: 'json',
+                    beforeSubmit: function() {
+                        $("#loader").show();
+                        $("#msg").slideUp();
+                        $("#error").hide();
+                    },
+                    success: function(result) {
+                        $("#loader").hide();
+                        if(result.success){
+                            $("#success").slideDown();
+                        }else{   
+                            $("#error").html("<i class='icon-warning'></>"+result.message);
+                            if(result.code===1){
+                                $("input['name=email']").css("color","red");
+                            }
+                            $("#error").slideDown();
+                        }
+                    }
+                });
+            });
+
+
+        </script>
+
+    {%endblock%}

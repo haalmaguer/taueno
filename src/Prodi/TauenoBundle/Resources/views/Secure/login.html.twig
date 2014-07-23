@@ -1,0 +1,44 @@
+{%extends "::base.html.twig"%}
+   
+{%block content%}
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a>Acceso</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span6 border-right">
+                <form action="{{path("_security_check")}}" method="post">
+                    <fieldset>
+                        <legend class="subheader-secondary"> {%if error%}<div class="notice small bg-red fg-white marker-on-bottom">Usuario o contrase&ntilde;a incorrectos</div>{%else%} Accede con tu cuenta {%endif%}</legend>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" placeholder="Email" name="_username"/>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="password" placeholder="Contrase&ntilde;a" name="_password"/>
+                        </div>
+                        <div class="input-control checkbox size4" data-role="input-control">
+                            <label>
+                                <input type="checkbox" checked="" name="_rememberme">
+                                <span class="check"></span>
+                                Recordar contrase&ntilde;a
+                            </label>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <button type="submit" class="button large primary">Entrar</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <a>Olvidaste tu contrase&ntilde;a?</a>
+            </div>
+            <div class="span6">
+                <div>
+                    {%include "TauenoBundle:Front:ventajas.html.twig"%}
+                    <a class="button large success" href="{{path('register')}}">Reg&iacute;strate ahora</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

@@ -1,0 +1,15 @@
+<div class="accordion with-marker span3 place-left margin10" data-role="accordion" data-closeany="true">
+    {%for key in facets|keys%}
+        <div class="accordion-frame">
+            <a factive="{{key}}" class="heading collapsed {%if app.session.get('factive')==key%}active{%endif%}" style="font-size: 12px" href="#">{{facetnames[key]}}</a>
+            <div class="content" style="display: none;">
+                <ul class="vertical-menu compact">
+                    {%for facet in facets[key]['terms']%}
+                        <li class="fg-grayLight"><a class="fg-hover-dark" href="{{path('search')}}?{{key}}={{facet['term']}}">{{facet['term']}}({{facet['count']}})</a></li>
+                    {%endfor%}  
+                </ul>
+            </div>
+        </div>
+    {%endfor%}     
+</div>
+

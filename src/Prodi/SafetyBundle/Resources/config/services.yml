@@ -1,0 +1,12 @@
+services:
+  Prodi.acl_manager:
+    class: Prodi\SafetyBundle\Domain\AclManager
+    arguments:
+      securityContext: "@security.context"
+      aclProvider: "@security.acl.provider"
+      doctrine: "@doctrine"
+  acl.helper:
+    class: Prodi\SafetyBundle\Domain\ACLHelper
+    arguments:
+      doctrine: "@doctrine"
+      securityContext: "@security.context"

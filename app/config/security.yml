@@ -1,0 +1,65 @@
+security:
+    acl:
+        connection: default 
+        
+    encoders:
+        Prodi\TauenoBundle\Document\Seller: {algorithm: sha512, encode_as_base64: true, iterations: 10}
+            
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_CUSTOMER,ROLE_SELLER,ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        sellers:
+            mongodb: { class: Prodi\TauenoBundle\Document\Seller, property: email }
+        
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            
+        login:
+            pattern:  ^/admin/login$
+            security: false
+
+#        # Firewall de la parte de administración o backend
+#        backend:
+#            pattern:        ^/admin
+#            provider:       usuarios
+#            form_login:
+#                login_path: /admin/login
+#                check_path: /admin/login_check
+#                default_target_path: /admin/es/dashboard
+#                always_use_default_target_path: true
+#            logout:
+#                path: /admin/logout
+#                target: /admin/login
+#            remember_me:
+#                key:        taueno
+#                lifetime:   86400
+                
+        login_front:
+            pattern:  ^/login$
+            security: false    
+        # Firewall global utilizado en la parte pública o frontend
+        frontend:
+            pattern: ^/*
+            provider: sellers
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                #use_referer: true
+                default_target_path: /ventas/profile
+                always_use_default_target_path: true
+            logout:
+                path: /logout
+                target: /
+            remember_me:
+                key:        taueno
+                lifetime:   86400
+                    
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/admin, roles: [ROLE_ADMIN]}
+        - { path: ^/ventas, roles: [ROLE_SELLER]}
+        - { path: ^/, roles: [ROLE_SELLER, IS_AUTHENTICATED_ANONYMOUSLY]}

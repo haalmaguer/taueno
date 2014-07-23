@@ -1,0 +1,510 @@
+<?php
+
+namespace Prodi\TauenoBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations\ReferenceOne;
+
+/**
+ * @MongoDB\Document(repositoryClass="Prodi\TauenoBundle\Repository\AnuncioRepository")
+ * @MongoDB\HasLifecycleCallbacks
+ */
+
+
+class Anuncio{
+
+    /**
+     * @MongoDB\Id
+     */
+    protected $id;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $title;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $description;
+
+    /**
+     * @MongoDB\Field(type="float")
+     */
+    private $price;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $currency;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $status;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $location;
+
+    /**
+     * @MongoDB\Field(type="int")
+     */
+    private $tauenos;
+
+    /**
+     * @MongoDB\Field(type="int")
+     */
+    private $visits;
+
+    /**
+     * @MongoDB\Field(type="date")
+     */
+    private $publish_date;
+
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $report;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $transporte;
+    
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $garantia;
+
+    /**
+     * @MongoDB\Field(type="boolean")
+     */
+    private $enabled;
+
+    /**
+     * @MongoDB\Field(type="float")
+     */
+    private $score;
+
+    /**
+     * @ReferenceOne(targetDocument="Category", simple=true, cascade={"all"}) 
+     */
+    private $category;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $owner;
+    
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    private $keywords;
+    
+    
+
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return self
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string $description
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return self
+     */
+    public function setPrice($price) {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float $price
+     */
+    public function getPrice() {
+        return $this->price;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return self
+     */
+    public function setCurrency($currency) {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string $currency
+     */
+    public function getCurrency() {
+        return $this->currency;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return self
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string $status
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * Set tauenos
+     *
+     * @param int $tauenos
+     * @return self
+     */
+    public function setTauenos($tauenos) {
+        $this->tauenos = $tauenos;
+        return $this;
+    }
+
+    /**
+     * Get tauenos
+     *
+     * @return int $tauenos
+     */
+    public function getTauenos() {
+        return $this->tauenos;
+    }
+
+    /**
+     * Set visits
+     *
+     * @param int $visits
+     * @return self
+     */
+    public function setVisits($visits) {
+        $this->visits = $visits;
+        return $this;
+    }
+
+    /**
+     * Get visits
+     *
+     * @return int $visits
+     */
+    public function getVisits() {
+        return $this->visits;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return self
+     */
+    public function setActive($active) {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get report
+     *
+     * @return boolean $report
+     */
+    public function getReport() {
+        return $this->report;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     * @return self
+     */
+    public function setScore($score) {
+        $this->score = $score;
+        return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return float $score
+     */
+    public function getScore() {
+        return $this->score;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return self
+     */
+    public function setTitle($title) {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string $title
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return self
+     */
+    public function setLocation($location) {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string $location
+     */
+    public function getLocation() {
+        return $this->location;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Prodi\TauenoBundle\Document\Category $category
+     * @return self
+     */
+    public function setCategory(\Prodi\TauenoBundle\Document\Category $category) {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Prodi\TauenoBundle\Document\Category $category
+     */
+    public function getCategory() {
+        return $this->category;
+    }
+
+    /**
+     * Set publish_date
+     *
+     * @param date $publishDate
+     * @return self
+     */
+    public function setPublishDate($publishDate) {
+        $this->publish_date = $publishDate;
+        return $this;
+    }
+
+    /**
+     * Get publish_date
+     *
+     * @return date $publishDate
+     */
+    public function getPublishDate() {
+        return $this->publish_date;
+    }
+
+    public function __construct() {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public function getCategoryname() {
+        return $this->category->getType();
+    }
+
+    public function getSubcategoryname() {
+        return $this->category->getName();
+    }
+
+    public function isPublic() {
+        return true;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param string $owner
+     * @return self
+     */
+    public function setOwner($owner) {
+        $this->owner = $owner;
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return string $owner
+     */
+    public function getOwner() {
+        return $this->owner;
+    }
+    
+    /**
+     * Get owner
+     *
+     * @return string $owner
+     */
+    public function getOwnerChat() {
+        $array = explode(".", $this->owner);
+        return str_replace("@", "_", $array[0]);
+    }
+
+
+    /**
+     * Set transporte
+     *
+     * @param boolean $transporte
+     * @return self
+     */
+    public function setTransporte($transporte)
+    {
+        $this->transporte = $transporte;
+        return $this;
+    }
+
+    /**
+     * Get transporte
+     *
+     * @return boolean $transporte
+     */
+    public function getTransporte()
+    {
+        return $this->transporte;
+    }
+
+    /**
+     * Set garantia
+     *
+     * @param boolean $garantia
+     * @return self
+     */
+    public function setGarantia($garantia)
+    {
+        $this->garantia = $garantia;
+        return $this;
+    }
+
+    /**
+     * Get garantia
+     *
+     * @return boolean $garantia
+     */
+    public function getGarantia()
+    {
+        return $this->garantia;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return self
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean $enabled
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set keywords
+     *
+     * @param string $keywords
+     * @return self
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string $keywords
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Set report
+     *
+     * @param boolean $report
+     * @return self
+     */
+    public function setReport($report)
+    {
+        $this->report = $report;
+        return $this;
+    }
+    
+    
+    public function __toString() {
+        return $this->title;
+    }
+}

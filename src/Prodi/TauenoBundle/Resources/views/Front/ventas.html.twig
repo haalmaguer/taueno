@@ -1,0 +1,164 @@
+{%extends "::base.html.twig"%}
+{%block css%}    
+    <link href="{{asset('vendor/css/upload.css')}}" rel="stylesheet">
+{%endblock css%}    
+{%block content%}
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a>{{app.user.username}}</a></li>
+            <li><a>Mi perfil</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span8">
+                <form>
+                    <fieldset>
+                      <legend class="subheader-secondary">Datos generales</legend>
+                        <div class="input-control text" data-role="input-control">
+                            <input type="text" placeholder="Titulo" name="title">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" placeholder="Precio" name="price">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <div class="input-control select size2" data-role="input-control">
+                            <select name="currency">
+                                <option value="CUC">CUC</option>
+                                <option value="CUP">CUP</option>
+                            </select>
+                        </div>
+                        <div class="input-control select size2" data-role="input-control">
+                            <select name="status">
+                                <option value="nuevo">Nuevo</option>
+                                <option value="usado">Usado</option>
+                                <option value="roto">Roto</option>
+                                <option value="servicio">Servicio</option>
+                            </select>
+                        </div>
+                        <i class="icon-help fg-green"></i>
+                        <div class="input-control select size4" data-role="input-control">
+                            <select name="category">
+                                <option value="1">Compra/Venta</option>
+                                <option value="2">Value 2</option>
+                                <option value="3">Value 3</option>
+                            </select>
+                        </div>
+
+                        <div class="input-control select size4" data-role="input-control">
+                            <select name="location">
+                                <option value="1">Seleccione lugar</option>
+                                <option value="2">Value 2</option>
+                                <option value="3">Value 3</option>
+                            </select>
+                        </div>
+
+                        <label>Descripcion</label>
+                        <div class="input-control textarea">
+                            <textarea name="description"></textarea>
+                        </div>
+                  
+                        <legend class="subheader-secondary">Datos del vendedor <small>opcional</small></legend>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" placeholder="Email" name="email">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="phone" placeholder="Telefono">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <legend class="subheader-secondary">Palabras claves <small>opcional</small></legend>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="brand" placeholder="Marca">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="color" placeholder="Color">
+                            <button class="btn-clear" tabindex="-1" type="button"></button>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="size" placeholder="Tama&ntilde;o">
+                        </div>
+                        <div class="input-control select size4" data-role="input-control">
+                            <select name="unit">
+                                <option value="cm">centimetros (cm)</option>
+                                <option value="mm">metro (m)</option>
+                                <option value="pulgadas">pulgadas</option>
+                                <option value="L">litros (L)</option>
+                                <option value="m2">metros cuadrados (m2)</option>
+                                <option value="m3">metros cubicos (m3)</option>
+                                <option value="mm">milimetros (mm)</option>
+                                <option value="v">Voltios</option>
+                                <option value="Hz">Hz</option>
+                            </select>
+                        </div>
+                        <legend class="subheader-secondary">Demuestra que eres una persona <small>haz click en el bicho</small> <i class="icon-bug"></i></legend>
+                        <div class="input-control text" style="font-size: 30px">
+                            <a class="icon-apple fg-hover-green fg-active-amber"></a>
+                            <a class="icon-bug fg-hover-green fg-active-amber"></a>
+                            <a class="icon-coffee fg-hover-green fg-active-amber"></a>
+                            <a class="icon-home fg-hover-green fg-active-amber"></a>
+                            <a class="icon-user fg-hover-green fg-active-amber"></a>
+                            <a class="icon-umbrella fg-hover-green fg-active-amber"></a>
+                            <a class="icon-monitor fg-hover-green fg-active-amber"></a>
+                            <a class="icon-rocket fg-hover-green fg-active-amber"></a>
+                            <a class="icon-start fg-hover-green fg-active-amber"></a>
+                            <a class="icon-heart fg-hover-green fg-active-amber"></a>
+                            <a class="icon-locked fg-hover-green fg-active-amber"></a>
+                            <a class="icon-dollar fg-hover-green fg-active-amber"></a>
+                            <a class="icon-spades fg-hover-green fg-active-amber"></a>
+                            <a class="icon-clubs fg-hover-green fg-active-amber"></a>
+                            <a class="icon-help fg-green"></a>
+                            <hr>
+                            <div class="input-control size6">
+                                <a class="button large success">Publicar anuncio</a>
+                                <a class="button large info disabled">Publicar y subir fotos</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span6">
+
+                <div class="bg-white">
+                     <legend class="subheader-secondary">Datos generales</legend>
+                    <div class="notice fg-white">Inserte primero los datos del anuncio y a continuacion las fotos. Recuerde que mejora su exito si sube imagenes</div>
+                    <br>
+                    <div class="notice fg-white">Las palabras claves con importante </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="notice fg-white">Opcional. Insere palabras claves en minuscula, adidas, nike, verde, rojo</div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="notice fg-white">Demuiestre que no es un robot. Solo responda la pregunta </div>
+                    {#<form id="upload" method="post" action="{{path('upload')}}" enctype="multipart/form-data" >
+                        <div id="drop">
+                            <p class="fg-white">Arrastre imagen</p>
+                            <a>Click</a>
+                            <input type="file" name="upl" multiple />
+                        </div>
+                        <ul>
+                            <!-- The file uploads will be shown here -->
+                        </ul>
+                    </form>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{%block javascripts%}
+    {{parent()}}
+    <script src="{{asset('vendor/js/jquery.knob.js')}}"></script>
+    <script src="{{asset('vendor/js/jquery.iframe-transport.js')}}"></script>
+    <script src="{{asset('vendor/js/jquery.fileupload.js')}}"></script>
+    <script src="{{asset('vendor/js/script.js')}}"></script>
+{%endblock%}

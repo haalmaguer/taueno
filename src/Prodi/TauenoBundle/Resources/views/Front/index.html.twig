@@ -1,0 +1,98 @@
+{%extends "::base.html.twig"%}
+{%block content%}
+    <div class="tile-area no-padding clearfix">
+        <div class="tile-group no-margin no-padding clearfix" style="width: 100%">
+            <div class="tile double quadro-vertical bg-gray ol-transparent on-right">
+                <div class="tile-content">
+                    <div class="brand">
+                        <span class="label fg-white">publicidad</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tile bg-magenta ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-laptop"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Computaci&oacute;n</span>
+                </div>
+            </div>
+            <div class="tile bg-green ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-cart-2"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Compra/venta</span>
+                </div>
+            </div>
+            <div class="tile bg-orange ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-cars"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Autos</span>
+                </div>
+            </div>
+            <div class="tile bg-violet ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-home"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Vivienda</span>
+                </div>
+            </div>
+            <div class="tile bg-red ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-user-3"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Servicios </span>
+                </div>
+            </div>
+
+            <div class="tile bg-blue ol-transparent">
+                <div class="tile-content icon">
+                    <span class="icon-wrench"></span>
+                </div>
+                <div class="tile-status">
+                    <span class="name"> Empleo </span>
+                </div>
+            </div>
+
+            <div class="tile quadro double-vertical ol-transparent bg-white">
+                <div class="tile-content">
+                    <div class="panel no-border">
+                        <div class="panel-header bg-magenta fg-white">Computaci&oacute;n</div>
+                        <div class="panel-content fg-dark nlp nrp">
+                            <ul class="vertical-menu">
+                                <li><a href="{{path('search', {'categoryname': 'PC de Escritorio'})}}">PC de Escritorio</a></li>
+                                <li><a href="{{path('search', {'categoryname': 'Laptop'})}}">Laptop</a></li>
+                                <li><a href="{{path('search', {'categoryname': 'Memoria RAM'})}}">Memoria RAM</a></li>
+                                <li><a href="{{path('search', {'categoryname': 'Impresoras'})}}">Impresoras</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile double double-vertical ol-transparent bg-white">
+                <div class="tile-content">
+                    <div class="panel no-border">
+                        <div class="panel-header bg-pink fg-white">Lo mas popular</div>
+                        <div class="panel-content fg-dark nlp nrp">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End first group -->
+
+        <div class="tile-group no-margin no-padding clearfix" style="width: 100%">
+            <div class="tile double ol-transparent"></div>
+            <div class="tile double ol-transparent"></div>
+            <div class="tile double ol-transparent"></div>
+            <div class="tile double ol-transparent"></div>
+        </div>
+
+    </div>
+{%endblock%}

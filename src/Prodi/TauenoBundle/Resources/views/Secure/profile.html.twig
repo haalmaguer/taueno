@@ -1,0 +1,77 @@
+{%extends "::base.html.twig"%}
+{%block css%}    
+    <link href="{{asset('vendor/css/bootstrapValidator.min.css')}}" rel="stylesheet">
+{%endblock css%}    
+{%block content%}
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a>Mi Perfil</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span12">
+                <a class="button primary">Editar mi perfil</a>
+                <a class="button primary">Editar mis anuncios</a>
+                <a class="button primary">Herramientas de Marketing</a>
+                <a class="button primary">Estudios de ventas</a>
+            </div>
+
+            <div class="span12">
+                <h1 class="subheader-secondary border-bottom">Hola {{app.user.name}} estas son sus ultimas notificaciones y mensajes</h1>
+                <div class="listview-outlook" data-role="listview">
+                    <div class="list-group">
+                        <a href="" class="group-title"><i class="icon-mail"></i> Mensajes</a>
+                        <div class="group-content">
+                            <a href="#" class="list">
+                                <div class="list-content">Pepe ha preguntado: "hola rachid, a como salen las memorias?"</div>
+                            </a>
+                            <a href="#" class="list">
+                                <div class="list-content">Pepe ha preguntado: "hola rachid, a como salen las memorias?"</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="list-group collapsed">
+                        <a href="" class="group-title"><i class="icon-bell"></i> Notificaciones</a>
+                        <div class="group-content">
+                            <a href="#" class="list">
+                                <div class="list-content">Tienes un anuncio marcado como estafa</div>
+                            </a>
+                        </div>
+                        <div class="group-content">
+                            <a href="#" class="list">
+                                <div class="list-content">Tienes un anuncio marcado como estafa</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{%block inline_js%}
+    {#    <script src="{{asset('vendor/js/jquery.knob.js')}}"></script>#}
+    {#    <script src="{{asset('vendor/js/jquery.iframe-transport.js')}}"></script>#}
+    {#    <script src="{{asset('vendor/js/jquery.fileupload.js')}}"></script>#}
+    {#    <script src="{{asset('vendor/js/script.js')}}"></script>#}
+    {#        <script src="{{asset('vendor/js/jquery.form.js')}}"></script>#}
+    {#        <script src="{{asset('vendor/js/bootstrapValidator.min.js')}}"></script>#}
+
+    {#<script type="text/javascript">
+        $(document).ready(function() {
+            $('#register_form').bootstrapValidator();
+            $("#register_form").ajaxForm({
+                beforeSubmit: function() {
+                    $("#loader").show();
+                    $("#msg").slideUp();
+                },
+                success: function(data) {
+                    $("#loader").hide();
+                    $("#success").slideDown();
+                }
+            });
+        });
+    </script>#}
+{%endblock%}

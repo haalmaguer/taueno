@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="Clasificados en Cuba">
+        <meta name="author" content="Prodi">
+
+        <link href="{{asset('vendor/css/metro-bootstrap.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/css/metro-bootstrap-responsive.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/css/iconFont.css')}}" rel="stylesheet">
+        <link href="{{asset('vendor/css/taueno.css')}}" rel="stylesheet">
+        {%block css%}
+
+        {%endblock css%}
+
+        <title>Taueno.com</title>
+
+    </head>
+    <body class="metro">
+        <div class="container">
+            <header>
+                <div class="navigation-bar white fixed-top shadow">
+                    <div class="navigation-bar-content container">
+                        <a href="{{path("index")}}" class="element" style="font-size: 30px">
+                            <strong class="fg-magenta">T</strong>
+                            <strong class="fg-green">A</strong>
+                            <strong class="fg-orange">U</strong>
+                            <strong class="fg-violet">E</strong>
+                            <strong class="fg-red">N</strong>
+                            <strong class="fg-blue">O</strong>
+                        </a>
+                        <span class="element-divider"></span>
+
+                        <a class="element1 pull-menu" href="#"></a>
+
+                        <div class="element input-element">
+                            <form action="{{path('search')}}">
+                                <div class="input-control text size6">
+                                    <input placeholder="Busca lugares, productos o marcas" name="q" type="text" >
+                                    <button class="btn-search"></button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <ul class="element-menu">
+                            <li>
+                                <a  href="{{path('publish')}}">Publicar</a>
+                            </li>
+
+                            {%if app.user is null%}
+                                <li>
+                                    <a href="{{path('register')}}">Registro</a>
+                                </li>
+                                <li>
+                                    <a  href="{{path('login')}}">Ingresar</a>
+                                </li>
+                            {%else%}
+                                <li>
+                                    <a  href="{{path('profile')}}">Mi perfil</a>
+                                </li>
+                                <li>
+                                    <a  href="{{path('_logout')}}">Salir</a>
+                                </li>
+
+                            {%endif%}
+
+                            <li>
+                                <a  href="{{path('ayuda')}}"><span class="icon-help"></span></a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </header>
+            <div class="clearfix">
+                <h1>&nbsp;</h1>
+            </div>
+            <div id="main_content" class="main-content clearfix container grid">
+                <div class="row" style="min-height: 600px">
+                    {%block content%}
+
+                    {%endblock content%}
+                </div>
+            </div> <!-- End of tiles -->
+
+            <footer class="border-top">
+                <div class="bottom-menu-wrapper">
+                    <ul class="horizontal-menu compact">
+                        <li>&copy; 2014 Taueno.com</li>
+                        <li><a href="#">Privacidad</a></li>
+                        <li><a href="#">Legal</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+
+        {%block javascripts%}
+            <!-- Load JavaScript Libraries -->
+            <script src="{{asset('vendor/js/jquery.min.js')}}"></script>
+            <script src="{{asset('vendor/js/jquery.widget.min.js')}}"></script>
+            <script src="{{asset('vendor/js/metro.min.js')}}"></script>
+            <script src="{{asset('vendor/js/socket.io.min.js')}}"></script>
+            <script src="{{asset('vendor/js/chat.js')}}"></script>
+
+            <script>
+                var socket = io.connect('http://localhost:3000');
+                var usersonline = [];
+                var user = false;
+                {%if app.user%}
+                    user = "{{app.user.chatUser}}";
+                {%else%}
+                    user = "comprador_"+usersonline.length; 
+                {%endif%}
+                
+                var login = function(){
+                {#                    if(manageSessions.get("login")===null){#}
+                    manageSessions.set("login", user);
+                    socket.emit("loginUser", user);
+                    //manageSessions.unset("login");
+                {#                    }#}
+
+                }
+                login();
+                var connectUser = function(chat_user){
+                     if (chat_user !== user) {
+                        elements = $(".icon-comments[seller='" + chat_user + "']");
+                        elements.removeClass("fg-grayLight");
+                        elements.addClass("fg-green");
+                     }
+                };
+                var disconnectUser = function(chat_user){
+                     if (chat_user !== user) {
+                        elements= $(".icon-comments[seller='" + chat_user + "']");
+                        elements.removeClass("fg-green");
+                        elements.addClass("fg-grayLight");
+                     }
+                };
+                var refreshUsersOnline = function () {
+                        $("#chat_section").html("");
+                        $.each(usersonline, function(key, chat_user) {
+                            if(chat_user!==user){
+                                $("#chat_section").append("<li><a href='javascript:void' class='chat icon-comments fg-green' seller='" + chat_user + "'> " + chat_user + " </a></li>");
+                                connectUser(chat_user);
+                            }
+                        });
+                };
+
+                $(function()
+                {
+                    login();
+                    socket.on("refreshChat", function(action, message)
+                    {
+                        //simplemente mostramos el nuevo mensaje a los usuarios
+                        //si es una nueva conexión
+                        if (action == "conectado")
+                        {
+                            connectUser(message);
+                        }
+                        //si es una desconexión
+                        else if (action == "desconectado")
+                        {
+                            disconnectUser(message);
+                        }
+                        //si es un nuevo mensaje 
+                        else if (action == "msg")
+                        {
+                            username = message.from;
+                            chatboxtitle = message.from;
+                            if (chatboxtitle !== undefined) {
+                                chatWith(chatboxtitle);
+                                $("#chatbox_" + chatboxtitle + " .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + username + ':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">' + message.msg + '</span></div>');
+                                $("#chatbox_" + chatboxtitle + " .chatboxcontent").scrollTop($("#chatbox_" + chatboxtitle + " .chatboxcontent")[0].scrollHeight);
+                            }
+
+                        }
+
+                    });
+                    socket.on("chat", function(action, message) {
+                        username = message.from;
+                        chatboxtitle = message.from;
+                        if (chatboxtitle !== undefined) {
+                            chatWith(chatboxtitle);
+                            $("#chatbox_" + chatboxtitle + " .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + username + ':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">' + message.msg + '</span></div>');
+                            $("#chatbox_" + chatboxtitle + " .chatboxcontent").scrollTop($("#chatbox_" + chatboxtitle + " .chatboxcontent")[0].scrollHeight);
+                        }
+                    });
+
+                    //actualizamos el sidebar que contiene los usuarios conectados cuando
+                    //alguno se conecta o desconecta, el parámetro son los usuarios online actualmente
+                    socket.on("updateSidebarUsers", function(usersOnline) {
+                        updateChat(usersOnline);
+                    });
+
+                    function updateChat(usersOnline) {
+                        if (!isEmptyObject(usersOnline))
+                        {
+                            usersonline = usersOnline;
+                            refreshUsersOnline();
+                        }
+                    }
+                    
+                    refreshUsersOnline();
+                });
+
+
+            </script>
+            {%block inline_js%}
+
+            {%endblock inline_js%}
+        {%endblock%}
+    </body>
+
+</html>

@@ -1,0 +1,218 @@
+{%extends "::base.html.twig"%}
+{%block css%}    
+    <link href="{{asset('vendor/css/bootstrapValidator.min.css')}}" rel="stylesheet">
+{%endblock css%}   
+{%block content%}
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a href="{{path('search')}}">Publicar anuncio</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span8">
+                <form id="publish_form" action="{{path('make_publish')}}" method="post"
+                      data-bv-message="Este valor no esta permitido"
+                      data-bv-group=".input-control"
+                      data-bv-feedbackicons-valid="icon-checkmark fg-green"
+                      data-bv-feedbackicons-invalid="icon-warning fg-red"
+                      data-bv-feedbackicons-validating="icon-cycle">
+                    <fieldset>
+                      <legend class="subheader-secondary">Datos generales</legend>
+                        <div class="input-control text" data-role="input-control">
+                            <input type="text" placeholder="Titulo" name="title"
+                            data-bv-notempty="true"
+                            data-bv-notempty-message="Por favor llene este campo">
+                             <small class="help-block">Ejemplos: Computadora, Celular, etc. Use frases concretas</small>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" placeholder="Precio" name="price"
+                                   data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo" 
+                                   data-bv-numeric="true"
+                                   data-bv-greaterthan="true"
+                                   data-bv-greaterthan-inclusive ="false"
+                                   data-bv-greaterthan-message="El precio debe ser mayor a 0"
+                                   data-bv-greaterthan-value="0"
+                                   data-bv-numeric-separator="." 
+                                   data-bv-numeric-message="Precio no v&aacute;lido">
+                                   <small class="help-block"> Ejemplos: 20, 30.5, 0.5</small>
+                        </div>
+                        <div class="input-control select size2" data-role="input-control">
+                            <select name="currency">
+                                <option value="CUC">CUC</option>
+                                <option value="CUP">CUP</option>
+                            </select>
+                            <small class="help-block">&nbsp;</small>
+                        </div>
+                        <div class="input-control select size2" data-role="input-control">
+                            <select name="status">
+                                <option value="nuevo">Nuevo</option>
+                                <option value="usado">Usado</option>
+                                <option value="roto">Roto</option>
+                                <option value="servicio">Servicio</option>
+                            </select>
+                            <small class="help-block"> &nbsp; </small>
+                        </div>
+                        <i class="icon-help fg-green"></i>
+                        <div class="input-control select size4" data-role="input-control">
+                            {%render controller("TauenoBundle:Front:categories")%}
+                        </div>
+
+                        <div class="input-control select size4" data-role="input-control">
+                            <select name="location">
+                                <option value="habana">Habana</option>
+                                <option value="matanzas">Matanzas</option>
+                            </select>
+                        </div>
+
+                        <label>Descripcion</label>
+                        <div class="input-control textarea">
+                            <textarea name="description"></textarea>
+                        </div>
+                  
+                        <legend class="subheader-secondary">Datos del vendedor</legend>
+                        <div class="input-control text size8" data-role="input-control">
+                            <input type="text" placeholder="Email" name="email" data-bv-notempty="true"
+                                   data-bv-notempty-message="Por favor llene este campo" 
+                                   data-bv-emailaddress="true" 
+                                   data-bv-emailaddress-message="Direcci&oacute;n de correo no v&aacute;lida" 
+                                   type="text" placeholder="Email" name="email">
+                            <small class="help-block">Ejemplo: fulano@gmail.com</small>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="phone" placeholder="Telefono (opcional)"
+                            pattern="^\d{8}"
+                            data-bv-regexp-message="No es un numero de telefono valido">
+                            <small class="help-block">Ejemplo 07835225</small>
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="movil" placeholder="Movil (opcional)"
+                            pattern="^5\d{7}"
+                            data-bv-regexp-message="No es un numero de telefono valido">
+                            <small class="help-block">Ejemplo 53609099</small>
+                        </div>
+                        <legend class="subheader-secondary">Palabras claves <small>opcional</small></legend>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="keywords[]" placeholder="Marca">
+                            
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="keywords[]" placeholder="Color">
+                            
+                        </div>
+                        <div class="input-control text size4" data-role="input-control">
+                            <input type="text" name="keywords[]" placeholder="Tama&ntilde;o">
+                        </div>
+                        <div class="input-control select size4" data-role="input-control">
+                            <select name="keywords[]">
+                                <option value="cm">centimetros (cm)</option>
+                                <option value="mm">metro (m)</option>
+                                <option value="pulgadas">pulgadas</option>
+                                <option value="L">litros (L)</option>
+                                <option value="m2">metros cuadrados (m2)</option>
+                                <option value="m3">metros cubicos (m3)</option>
+                                <option value="mm">milimetros (mm)</option>
+                                <option value="v">Voltios</option>
+                                <option value="Hz">Hz</option>
+                            </select>
+                        </div>        {#    <script src="{{asset('vendor/js/jquery.knob.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/jquery.iframe-transport.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/jquery.fileupload.js')}}"></script>#}
+        {#    <script src="{{asset('vendor/js/script.js')}}"></script>#}
+                        <legend class="subheader-secondary">Demuestra que eres una persona <small>haz click en el bicho</small> <i class="icon-bug"></i></legend>
+                        <div class="input-control text" style="font-size: 30px">
+                            <a class="icon-apple fg-hover-green fg-active-amber"></a>
+                            <a class="icon-bug fg-hover-green fg-active-amber"></a>
+                            <a class="icon-coffee fg-hover-green fg-active-amber"></a>
+                            <a class="icon-home fg-hover-green fg-active-amber"></a>
+                            <a class="icon-user fg-hover-green fg-active-amber"></a>
+                            <a class="icon-umbrella fg-hover-green fg-active-amber"></a>
+                            <a class="icon-monitor fg-hover-green fg-active-amber"></a>
+                            <a class="icon-rocket fg-hover-green fg-active-amber"></a>
+                            <a class="icon-start fg-hover-green fg-active-amber"></a>
+                            <a class="icon-heart fg-hover-green fg-active-amber"></a>
+                            <a class="icon-locked fg-hover-green fg-active-amber"></a>
+                            <a class="icon-dollar fg-hover-green fg-active-amber"></a>
+                            <a class="icon-spades fg-hover-green fg-active-amber"></a>
+                            <a class="icon-clubs fg-hover-green fg-active-amber"></a>
+                            <a class="icon-help fg-green"></a>
+                            <hr>
+                            <div class="input-control size6">
+                                <button type="submit" class="button large success">Publicar anuncio</button>
+                                <button type="submit" class="button large info disabled">Publicar y subir fotos</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span6">
+
+                {#<div class="bg-white">
+                     <legend class="subheader-secondary">Datos generales</legend>
+                    <div class="notice fg-white">Inserte primero los datos del anuncio y a continuacion las fotos. Recuerde que mejora su exito si sube imagenes</div>
+                    <br>
+                    <div class="notice fg-white">Las palabras claves con importante </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="notice fg-white">Opcional. Insere palabras claves en minuscula, adidas, nike, verde, rojo</div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="notice fg-white">Demuiestre que no es un robot. Solo responda la pregunta </div>
+                    <form id="upload" method="post" action="{{path('upload')}}" enctype="multipart/form-data" >
+                        <div id="drop">
+                            <p class="fg-white">Arrastre imagen</p>
+                            <a>Click</a>
+                            <input type="file" name="upl" multiple />
+                        </div>
+                        <ul>
+                            <!-- The file uploads will be shown here -->
+                        </ul>
+                    </form>
+                </div>#}
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{%block javascripts%}
+        {{parent()}}
+        <script src="{{asset('vendor/js/jquery.form.js')}}"></script>
+        <script src="{{asset('vendor/js/bootstrapValidator.min.js')}}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#publish_form').bootstrapValidator();
+                $("#publish_form").ajaxForm({
+                    dataType: 'json',
+                    beforeSubmit: function() {
+                        $("#loader").show();
+                        $("#msg").slideUp();
+                        $("#error").hide();
+                    },
+                    success: function(result) {
+                        $("#loader").hide();
+                        if(result.success){
+                            $("#success").slideDown();
+                        }else{   
+                            $("#error").html("<i class='icon-warning'></>"+result.message);
+                            if(result.code===1){
+                                $("input['name=email']").css("color","red");
+                            }
+                            $("#error").slideDown();
+                        }
+                    }
+                });
+            });
+
+
+        </script>
+
+    {%endblock%}

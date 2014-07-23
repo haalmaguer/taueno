@@ -1,0 +1,112 @@
+{%extends "::base.html.twig"%}
+{% block content%}
+
+    <nav class="breadcrumbs small">
+        <ul>
+            <li><a href="{{path('index')}}">Inicio</a></li>
+            <li><a href="{{path('search', {'q':anuncio.category.name})}}">{{anuncio.category}}</a></li>
+            <li class="active"><a href="#">{{anuncio.title}}</a></li>
+        </ul>
+    </nav>
+    <div class="grid">
+        <div class="row">
+            <div class="span11">
+                <h3 class="fg-cyan"><span class="fg-gray">{{anuncio.price}} cuc</span> - {{anuncio.title | upper}} Western digital my passport green </h3>
+
+                <ul class="inline fg-cyan">
+                    <li> <small class="icon-calendar"> 24/6/2014 </small> </li>
+                    <li> <span href="#" class="icon-location"> {{anuncio.location}}</span> </li>
+                    <li> <span href="#" class="icon-phone-2"> +53 52525252</span> </li>
+                    <li> <span href="#" class="icon-mail"> taueno@gmail.com</span> </li>
+                </ul>
+
+                <hr style="margin-top: 0px">
+                <p style="font-size: 12px">{{anuncio.description|raw}} Última generación de LG!!! Usted lo estrena y saca por primera vez de la caja, nunca se ha encendido. Viene con todos sus accesorios de fábrica: audífonos manos libres estéreo con plug de 3.5 mm, cargador, cable de datos, manual. Listo para su uso en Cubacel. Puede configurar su correo Nauta, trabaja perfecto!!! Este móvil cuenta con un microprocesador a una frecuencia de 1GHz, 512 Mb de RAM, tiene 4Gb de almacenamiento interno, soporta microSd de hasta 32Gb, la pantalla es de 3.2 pulgadas con tecnología IPS, posee además, WiFi, GPS y viene con la versión de Android 4.1.2 (Jelly Bean). Es QuadBand (cobertura en todo el país) y tiene idioma español. Llame para más detalles al cell 5 375 1500.</p>               
+
+                <div class="row">                  
+                    <img src="{{asset('vendor/images/logo.png')}}" class="span2 shadow">
+                    <img src="{{asset('vendor/images/logo.png')}}" class="span2 shadow">
+                    <img src="{{asset('vendor/images/logo.png')}}" class="span2 shadow">                    
+                </div> 
+            </div>
+            <div class="span3">
+                <div class="panel">
+                    <div class="panel-header bg-lightBlue fg-white">
+                        Promo section
+                    </div>
+                    <div class="panel-content">
+                        <p style="font-size: 12px">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div> 
+    <hr>
+    <div class="input-control text size11" data-role="input-control">
+        <p style="font-size: 12px"><i class="icon-pencil"></i>  Las preguntas solo podrán ser realizadas por usuarios registrados en TAUENO. <a href="#">Regístrate ahora <i class="icon-user-3"></i></a></p>
+        <input type="text" placeholder="Hacer una pregunta al vendedor">
+        <button class="btn-clear" tabindex="-1" type="button"></button>
+    </div>
+    <button class="btn-finish" type="button">Adicionar</button>
+
+
+    <div class="listview-outlook" data-role="listview">
+        <a class="list marked" href="#">
+            <div class="list-content">
+                <span class="list-title">subscribe@metroui.net</span>
+                <span class="list-subtitle">MetroUI: News on 26/10/2013</span>
+                <span class="list-remark">Hello friend! Newest for Metro UI CSS</span>
+            </div>
+        </a>
+        <a class="list" href="#">
+            <div class="list-content">
+                <span class="list-title">subscribe@metroui.net</span>
+                <span class="list-subtitle">MetroUI: News on 26/10/2013</span>
+                <span class="list-remark">Hello friend! Newest for Metro UI CSS</span>
+            </div>
+        </a>
+        <a class="list" href="#">
+            <div class="list-content">
+                <span class="list-title">subscribe@metroui.net</span>
+                <span class="list-subtitle">MetroUI: News on 26/10/2013</span>
+                <span class="list-remark">Hello friend! Newest for Metro UI CSS</span>
+            </div>
+        </a>
+        <a class="list" href="#">
+            <div class="list-content">
+                <span class="list-title">subscribe@metroui.net</span>
+                <span class="list-subtitle">MetroUI: News on 26/10/2013</span>
+                <span class="list-remark">Hello friend! Newest for Metro UI CSS</span>
+            </div>
+        </a>
+        <a class="list" href="#">
+            <div class="list-content">
+                <span class="list-title">subscribe@metroui.net</span>
+                <span class="list-subtitle">MetroUI: News on 26/10/2013</span>
+                <span class="list-remark">Hello friend! Newest for Metro UI CSS</span>
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <h3 class="fg-cyan"><span class="fg-gray">Otros productos que pueden interesarle</span></h3>
+        <div class="image-container span2" style="width: auto">
+            <img src="{{asset('vendor/images/103.jpg')}}" class="span2 ">
+            <div class="overlay-fluid">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </div>
+        </div>
+        <div class="image-container span2" style="width: auto">
+            <img src="{{asset('vendor/images/103.jpg')}}" class="span2 ">
+            <div class="overlay-fluid">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </div>
+        </div>
+        <div class="image-container span2" style="width: auto">
+            <img src="{{asset('vendor/images/103.jpg')}}" class="span2 ">
+            <div class="overlay-fluid">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            </div>
+        </div>
+
+    </div>
+{%endblock%}

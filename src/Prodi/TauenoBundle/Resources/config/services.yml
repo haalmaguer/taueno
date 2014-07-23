@@ -1,0 +1,4 @@
+services:
+  search.services:
+    class: Prodi\TauenoBundle\Services\Services
+    arguments: ['@session']

@@ -1,0 +1,188 @@
+{%extends "::base.html.twig"%}
+{%block content%}
+    <style>
+        .hide{
+            display: none;
+        }
+    </style>
+    <form action="{{path('search')}}" id="filter">
+        <nav class="breadcrumbs small">
+            <ul>
+                <li><a href="{{path('index')}}">Inicio</a></li>
+                    {%if app.session.get('categoryname')!='' and app.session.get('categoryname')!=false%}
+                    <li class="active"><a>{{app.session.get('categoryname')}}</a> <input type="hidden" name="categoryname" value="{{app.session.get('categoryname')}}"/><a href="{{path('search', {'categoryname':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('subcategoryname')!='' and app.session.get('subcategoryname')!=false%}
+                    <li class="active"><a>{{app.session.get('subcategoryname')}}</a> <input type="hidden" name="subcategoryname" value="{{app.session.get('subcategoryname')}}"/><a href="{{path('search', {'subcategoryname':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('q')!='' and app.session.get('q')!=false%}
+                    <li class="active"><a>{{app.session.get('q')}}</a> <input type="hidden" name="q" value="{{app.session.get('q')}}"/><a href="{{path('search', {'q':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('tagnames')!='' and app.session.get('tagnames')!=false%}
+                    <li class="active"><a> {{app.session.get('tagnames')}} </a> <input type="hidden" name="tagnames" value="{{app.session.get('tagnames')}}"/><a href="{{path('search', {'tagnames':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('status')!='' and app.session.get('status')!=false%}
+                    <li class="active"><a> {{app.session.get('status')}} </a> <input type="hidden" name="status" value="{{app.session.get('status')}}"/><a href="{{path('search', {'status':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('location')!='' and app.session.get('location')!=false%}
+                    <li class="active"><a> en {{app.session.get('location')}} </a> <input type="hidden" name="location" value="{{app.session.get('location')}}"/><a href="{{path('search', {'location':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('from')!='' and app.session.get('from')!=false%}
+                    <li class="active"><a> desde {{app.session.get('from')}}$ </a> <input type="hidden" name="from" value="{{app.session.get('from')}}"/><a href="{{path('search', {'from':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+
+                {%if app.session.get('to')!='' and app.session.get('to')!=false%}
+                    <li class="active"><a> hasta {{app.session.get('to')}}$ </a> <input type="hidden" name="to" value="{{app.session.get('to')}}"/><a href="{{path('search', {'to':'remove'})}}" class="fg-hover-red"><i class="icon-cancel on-right"></i></a></li>
+                        {%endif%}
+                        {#            <li>Te enccuentras en la seccion de busqueda, te recomendamos consultar la ayuda para mejorar tus filtrados <i class="icon-help"></i></li>#}
+            </ul>
+        </nav>
+        <div class="toolbar transparent">
+
+            <div class="input-control text size2">
+                <input type="number" value="{{app.session.get('from')}}" name="from" placeholder="precio minimo"/>
+                <button type="button" class="btn-clear" tabindex="-1"></button>
+            </div>
+            <div class="input-control text size2">
+                <input type="number" value="{{app.session.get('to')}}" name="to" placeholder="precio maximo"/>
+                <button type="button" class="btn-clear" tabindex="-1"></button>
+            </div>
+
+            <div class="input-control select size2" data-role="input-control">
+                <select name="status" class="bg-white select" filter="status">
+                    <option value="">Todos</option>
+                    <option value="nuevo">Nuevos</option>
+                    <option value="usado">Usados</option>
+                    <option value="roto">Rotos</option>
+                </select>
+            </div>
+
+            <div class="input-control select size2" data-role="input-control" filter="fotos">
+                <select name="pictures" class="bg-white">
+                    <option value="">Todos</option>
+                    <option value="no">Sin fotos</option>
+                    <option value="si">Con fotos</option>
+                </select>
+            </div>
+            <a href="{{path("search",{"list_type":"tiles"})}}" class="button"><i class="icon-list"></i></a>
+            <a href="{{path("search",{"list_type":"list"})}}" class="button"><i class="icon-grid"></i></a>
+
+            <div class="input-control text size1">
+                <input type="submit" value="Filtrar" class="bg-magenta fg-white text-bold"/>
+            </div>
+            <div class="input-control text size2">
+                <input type="submit" value="Guardar" class="bg-green fg-white text-bold"/>
+            </div>
+
+
+            {%set sort = app.session.get('sort')%}
+                {%set dir = app.session.get('dir')%}
+                    <div class="border-bottom border-top"> 
+                        <ul class="horizontal-menu"> 
+                            <li><a class="button"> <strong>{{cant}}</strong> anuncios encontrados en <strong>{{time/1000}}</strong> segundos:</a></li> 
+                            <li><a class="button icon-star {%if sort=="_score"%} fg-red {%endif%}" href="{{path("search",{"sort":"_score", "dir":"asc"})}}"> relevantes</a></li> 
+                            <li><a class="button icon-clock {%if sort=="publish_date" and dir=="desc"%} fg-red {%endif%}" href="{{path("search",{"sort":"publish_date", "dir":"desc"})}}"> recientes</a></li> 
+                            <li><a class="button icon-calendar {%if sort=="publish_date" and dir=="asc"%} fg-red {%endif%}" href="{{path("search",{"sort":"publish_date", "dir":"asc"})}}"> antiguos</a></li> 
+                            <li><a class="button icon-dollar-2 {%if sort=="price" and dir=="desc"%} fg-red {%endif%}" href="{{path("search",{"sort":"price", "dir":"desc"})}}"> caros</a></li> 
+                            <li><a class="button icon-dollar {%if sort=="price" and dir=="asc"%} fg-red {%endif%}" href="{{path("search",{"sort":"price", "dir":"asc"})}}"> baratos</a></li> 
+                        </ul> 
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div class="grid">
+                <div class="row">
+                    <div id="facet_menu" class="span3 fixed-top border-right">
+                        {%include "TauenoBundle:Front:facets.html.twig" with{'facets':facets, 'facetnames':facetnames}%}
+                        <h5>Usuarios conectados</h5>
+                        <ul id="chat_section" class="vertical-menu compact">
+
+                        </ul>
+                    </div>
+                    <div class="span10" id="filter_result">
+                        {%if anuncios|length>0%}
+                            {%include "TauenoBundle:Front:list.html.twig" with{'anuncios':anuncios, 'list_type': list_type}%}
+                        {%else%}
+                            <p>No se han encontrado resultados para <strong>{{app.session.get('q')}}</strong> 
+                            {%if suggestions|length>0%}
+                                tal vez ud quiso decir: 
+                            {%endif%}
+                            {%for suggestion in suggestions%}
+                                <a href="{{path('search', {'q':suggestion})}}">{{suggestion}}</a> 
+                            {%endfor%}    
+                        {%endif%}
+                            
+                    </div>
+                    <div id="loader" class="span12" style="display: none"></div>
+                </div>
+            </div>
+            {%endblock%}
+                {%block inline_js%}
+                    <script type="text/javascript">
+
+
+                        refreshUsersOnline();
+
+                        $("select").change(function(e) {
+                            val = $(this).val();
+                            filter = $(this).attr('filter');
+                            location.href = "{{path('search')}}?" + filter + "=" + val;
+                        });
+
+                        var page = 1;
+                        var fin = false;
+                        function subir() {
+                            $(window).scrollTop(0);
+                        }
+
+                        $("#main_content").on('click', '.chat', function() {
+                            seller = $(this).attr("seller");
+                            if($(this).hasClass('fg-green'))
+                                chatWith(seller, false);
+                        });
+                        
+                        $("#filter_result").on('click', '.view', function() {
+                            target = $(this).attr("target");
+                            $("#" + target).toggleClass("hide");
+                        });
+
+                        $("#facet_menu").on('click', '.heading', function() {
+                            factive = $(this).attr("factive");
+                            $.post('{{path('set_factive')}}?factive=' + factive);
+                        });
+                        $(window).scroll(function()
+                        {
+                            if ($(window).scrollTop() == $(document).height() - $(window).height() && !fin)
+                            {
+                                $('#filter_result').show();
+                                page = page + 1;
+                                $('#loader').html('<div class="ribbed-amber">...</div>');
+                                $.ajax({
+                                    url: "{{path('search', {'ajax': true})}}&page=" + page,
+                                    success: function(html)
+                                    {
+                                        if (html !== "0 results")
+                                        {
+                                            $("#filter_result").append(html);
+                                            $('#loader').hide();
+                                            refreshUsersOnline();
+                                        } else
+                                        {
+                                            fin = true;
+                                            $('#loader').html('<span class="icon-blocked"> No hay mas resultados que mostrar | <a class="icon-arrow-up" href="javascript:void;" onclick="subir();">Subir</a>  <a class="icon-floppy" href="javascript:void;" onclick="subir();"> Guardar</a>');
+                                            $("#loader").show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+                {%endblock inline_js%}

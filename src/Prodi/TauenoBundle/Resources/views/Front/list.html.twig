@@ -1,0 +1,34 @@
+{%if(list_type=="tiles")%}
+    <div class="listview-outlook" data-role="listview">
+        {%for anuncio in anuncios%}
+            <div class="list">
+                <div class="list-content">
+                    <p class="list-title"><a href="{{path("anuncio", {'id':anuncio.id})}}"><strong>{{anuncio.title|upper}}</strong> {{anuncio.price|number_format(2)}} CUC </a> | {{anuncio.keywords}} <i class="icon-camera"></i> <a class="chat icon-comments-4 fg-hover-blue fg-{%if loop.index%3==0%}grayLighter{%else%}green{%endif%}" seller="{{anuncio.owner}}"></a> <span class="icon-phone"> 834 4344</span>| <span class="icon-phone-2"> 5 360 9080 Randy</span> </p>
+                    <span class="list-subtitle">
+                        <span class="list-remark">{{anuncio.description|raw}} Lorem ipsum dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit </span>
+                    </span>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+
+{%else%}
+    <div class="listview-outlook" data-role="listview">
+        {%for anuncio in anuncios%}
+            <div class="list">
+                <div class="list-content">
+                    <p class="list-title"><a class="view" target="list{{anuncio.id}}" href="{{path("anuncio", {'id':anuncio.id})}}">{{anuncio.title|upper}}</a> | {{anuncio.keywords}} {{anuncio.owner}} <i class="icon-camera"></i> <i class="icon-shipping"></i> <i class="icon-medal"></i> <a class="view icon-search" target="list{{anuncio.id}}"></a> <a class="icon-comments chat fg-grayLight" seller="{{anuncio.ownerChat}}"></a> </p>
+                    <span class="list-subtitle">
+                        <h5 class="place-right">{{anuncio.price|number_format(2)}} CUC</h5>
+                        <span class="icon-calendar fg-grayLigh fg-hover-dark"> {{anuncio.publishDate|date('D d/m/Y i:s')}}</span> <span class="fg-{%if(anuncio.status=="Nuevo")%}green icon-battery-full{%elseif(anuncio.status=="Roto")%}red icon-battery-empty{%else%}cobalt icon-battery-half{%endif%}"> {{anuncio.status}}</span>  <a href="{{path('search', {'location':anuncio.location|lower})}}" class="icon-location fg-hover-dark fg-grayLigh"> {{anuncio.location|default('no especifica')}}</a> <span>{{anuncio.category}}</span> 
+                        <span class="list-remark">{{anuncio.description|raw}} Lorem ipsum dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit dolor amet sit </span>
+                    </span>
+                </div>
+            </div>
+            <div id="list{{anuncio.id}}" class="notice marker-on-top hide bg-white border-bottom">
+                <p>{{anuncio.description}}</p>
+                <a class="button success" href="{{path("anuncio", {'id':anuncio.id})}}">Ver ficha</a>
+            </div>
+        {%endfor%}
+    </div>
+{%endif%}
